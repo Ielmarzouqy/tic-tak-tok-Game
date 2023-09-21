@@ -8,11 +8,51 @@
     <title>Tic-Tak-Tok-Game</title>
 </head>
 <body>
-     <div class="board" id="board">
-    
-        
+    <div class="sidebar hide" id="sidebar">
+        <h1>Tic Tac Toe</h1>
+        <div class="player">
+            <label for="player1">Player 1:</label>
+            <input type="text" id="player1" placeholder="Enter name">
+        </div>
+        <div class="player">
+            <label for="player2">Player 2:</label>
+            <input type="text" id="player2" placeholder="Enter name">
+        </div>
+        <button onclick="score()">Score</button>
+    </div>
+  
+     <div class="board hide" id="board">
     </div> 
 
+    <div class="first-page " id="first-page">
+        <h1>TIC TAK TOE</h1>
+        <div class="player">
+            <input class="user" type="text" placeholder="Player X">
+            <input class="user" type="text" name="" id="" placeholder="Player O">
+        </div>
+            
+            <button onclick="startGame()" class="btn" id="start">Play Game</button>
+    </div>
 
+    <div class="hide" id="score">
+
+    
+        <div class="page-score hide" id="">
+            <div class="scores ">
+                <h1>Tic Tac Toe Scores</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Wins</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

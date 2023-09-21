@@ -6,27 +6,172 @@ box-sizing: border-box;
 }
 
 .board{
+    margin: auto;
+    margin-top: 20px;
     width: 100vh;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
- 
+}
+.first-page{
+    display: grid;
+    height: 100vh;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to bottom right, #2dfdfd, #5e1780);
+}
+h1{
+    margin: 50px;
+    color: rgb(249, 249, 249);
+    font-family: Luminari, fantasy; 
+    font-size:xx-large;   
+}
+.player{
+    display: grid;
+    gap: 40px;
+    left: auto;
+}
+.user{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn{
+    margin: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: rgb(240, 240, 248);
+    border: none;
+    color: rgb(241, 175, 43);
+    cursor: pointer;
+    font-family: Marker Felt, fantasy;
+    font-size: larger;
+}
+.btn:hover{
+    background-color: rgb(241, 175, 43);
+    color:aliceblue
+}
+.winning-message{
+    margin: 10px;
+    padding: 10px;
+    left: 50%;
+    font-size: large;
+    font-family: monospace;
+    color: rgb(28, 208, 82);
+    display: none;
+}
+.show{
+    display:flex;
+}
+.hide{
+    display: none;
 }
 .cell{
     width: 5%;
     height: 5%;
     background-color: blueviolet;
-    border: 1px solid wheat;
+    border: 1px solid rgb(253, 244, 226);
 }
 
 .icon{
-    /* background-image: url(./images/o.png); */
     margin: 25%;
     height: 50%;
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*  sidebar */
+.sidebar {
+    background-color: #5e1780;
+    color: white;
+    padding: 20px;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar h1 {
+    margin: 0;
+}
+
+.player {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #26f0f0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.game-board {
+    margin-left: 250px;
+    padding: 20px;
+}
+/*  content */
+.page-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+.scores {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+h1 {
+    color: #5e1780;
+}
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #5e1780;
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a {
+    display: block;
+    margin-top: 20px;
+    color: #333;
+    text-decoration: none;
 }
