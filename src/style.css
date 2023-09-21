@@ -1,0 +1,32 @@
+
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.board{
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+ 
+}
+.cell{
+    width: 5%;
+    height: 5%;
+    background-color: blueviolet;
+    border: 1px solid wheat;
+}
+
+.icon{
+    /* background-image: url(./images/o.png); */
+    margin: 25%;
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
