@@ -32,58 +32,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     sidebar.classList.remove('hide');
   }
 
-  function checkWin() {
-    const sortedMoves = lastMoves.slice().sort((a, b) => a - b);
-      const sortedMovesString = sortedMoves.join('');  // arry of moves changed to string
-                if (sortedMovesString) {
-        for (let i = 0; i < sortedMoves.length - 4; i++) {
-            if (
-              sortedMoves[i + 1] === sortedMoves[i] + 1 &&
-              sortedMoves[i + 2] === sortedMoves[i] + 2 &&
-              sortedMoves[i + 3] === sortedMoves[i] + 3 &&
-              sortedMoves[i + 4] === sortedMoves[i] + 4 ||
-              sortedMoves[i + 1] === sortedMoves[i] + 20 &&
-              sortedMoves[i + 2] === sortedMoves[i] + 40 &&
-              sortedMoves[i + 3] === sortedMoves[i] + 60 &&
-              sortedMoves[i + 4] === sortedMoves[i] + 80 ||
-              sortedMoves[i + 1] === sortedMoves[i] + 21 &&
-              sortedMoves[i + 2] === sortedMoves[i] + 42 &&
-              sortedMoves[i + 3] === sortedMoves[i] + 63 &&
-              sortedMoves[i + 4] === sortedMoves[i] + 84 ||
-              sortedMoves[i + 1] === sortedMoves[i] + 19 &&
-              sortedMoves[i + 2] === sortedMoves[i] + 38 &&
-              sortedMoves[i + 3] === sortedMoves[i] + 57 &&
-              sortedMoves[i + 4] === sortedMoves[i] + 76
-            ) {
-              console.log('Player wins!',  sortedMoves[i],sortedMoves);
-            }  
-      }
-      }
- 
-}
-function handleClick(event, cell) {
-  if (!cell.hasChildNodes()) { 
-    lastMoves.push(parseInt(cell.getAttribute('data-value')));
-    if (currentPlayer === "X") {
-      setIconx(cell);
-      currentPlayer = "O"; 
-    } else {
-      setIcono(cell);
-      currentPlayer = "X";
-    }
-    if (lastMoves.length > 4) {
-      checkWin();
-      console.log(lastMoves);
-      lastMoves.shift();
-    }
-  }
-}
- 
-
-
-
 function setIconx(cell){
-    // let cell = document.getElementById('cell');
     let icon = document.createElement('img');
     icon.setAttribute('src', './src//images/x.png');
     icon.setAttribute('class', 'icon');
@@ -93,7 +42,6 @@ function setIconx(cell){
 }
 
 function setIcono(cell){
-    // let cell = document.getElementById('cell');
     let icon = document.createElement('img');
     icon.setAttribute('src', './src//images/o.png');
     icon.setAttribute('class', 'icon');
@@ -109,4 +57,49 @@ function score() {
   sidebar.classList.add('hide');
   let score = document.getElementById('score');
   score.classList.remove('hide');
+}
+
+
+
+function checkWinnerAxeX(arr) {
+  const possibility = [1, 2, 3, 4, 5];
+  for (let i = 0; i <= arr.length - 5 ; i++) {
+    const subarray = arr.slice(i, i + 5);
+    const differences = subarray.map((val, index) => val - subarray[0]);
+
+    if (possibility.includes(differences[1]) &&
+        differences.every((diff, index) => diff === differences[0] + index)) {
+      return subarray;
+    }
+  }
+  
+  return [];
+}
+
+function handleClick(event, cell) {
+  if (!cell.hasChildNodes()) {
+    lastMoves.push(parseInt(cell.getAttribute('data-value')));
+    let arraySorted = lastMoves.sort(function(a,b){return a-b});
+    const result = checkWinnerAxeX(lastMoves );
+
+    if (currentPlayer === "X") {
+      setIconx(cell);
+      currentPlayer = "O";
+
+      if (result.length > 0) {
+        console.log("Winner is the player X", result);
+      } else {
+        console.log(lastMoves, arraySorted);
+      }
+    } else {
+      setIcono(cell);
+      currentPlayer = "X";
+
+      if (result.length > 0) {
+        console.log("Winner is the player O", result);
+      } else {
+        console.log(lastMoves);
+      }
+    }
+  }
 }
