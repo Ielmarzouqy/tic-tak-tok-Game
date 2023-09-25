@@ -1,5 +1,7 @@
 let currentPlayer = "X";
 let lastMoves = [];
+let lastXMoves = [];
+let lastOMoves = [];
 const possibleWinSequences = [
         [1, 2, 3, 4, 5],
         [20, 40, 60, 80, 100], 
@@ -50,7 +52,6 @@ function setIcono(cell){
 }
 
 function score() {
-  
   let board = document.getElementById('board');
   board.classList.add('hide');
   let sidebar = document.getElementById('sidebar');
@@ -59,16 +60,18 @@ function score() {
   score.classList.remove('hide');
 }
 
-
-
 function checkWinnerAxeX(arr) {
   const possibility = [1, 2, 3, 4, 5];
+                                            
+  console.log("checkWinner")
   for (let i = 0; i <= arr.length - 5 ; i++) {
     const subarray = arr.slice(i, i + 5);
     const differences = subarray.map((val, index) => val - subarray[0]);
 
     if (possibility.includes(differences[1]) &&
-        differences.every((diff, index) => diff === differences[0] + index)) {
+        differences.every((diff, index) => diff === differences[0] + index) 
+         ) {
+        
       return subarray;
     }
   }
@@ -78,27 +81,35 @@ function checkWinnerAxeX(arr) {
 
 function handleClick(event, cell) {
   if (!cell.hasChildNodes()) {
-    lastMoves.push(parseInt(cell.getAttribute('data-value')));
-    let arraySorted = lastMoves.sort(function(a,b){return a-b});
-    const result = checkWinnerAxeX(lastMoves );
-
+  
     if (currentPlayer === "X") {
+      lastXMoves.push(parseInt(cell.getAttribute('data-value')));
+      lastXMoves.sort(function(a,b){return a-b});
+      const result = checkWinnerAxeX(lastXMoves, currentPlayer );
+
       setIconx(cell);
       currentPlayer = "O";
+      console.log(lastXMoves)
 
       if (result.length > 0) {
         console.log("Winner is the player X", result);
       } else {
-        console.log(lastMoves, arraySorted);
+        console.log(lastXMoves);
       }
     } else {
+      
+      lastOMoves.push(parseInt(cell.getAttribute('data-value')));
+      lastOMoves.sort(function(a,b){return a-b});
+      const result = checkWinnerAxeX(lastOMoves, currentPlayer );
+
       setIcono(cell);
       currentPlayer = "X";
+      console.log(lastOMoves)
 
       if (result.length > 0) {
         console.log("Winner is the player O", result);
       } else {
-        console.log(lastMoves);
+        console.log(lastOMoves);
       }
     }
   }
