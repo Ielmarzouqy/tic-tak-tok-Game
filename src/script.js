@@ -81,43 +81,22 @@ function checkWinnerAxeX(arr) {
 function handleClick(event, cell) {
   if (!cell.hasChildNodes()) {
     let move = parseInt(cell.getAttribute('data-value'));
+    console.log(move)
     if (currentPlayer === "X") {
-      // lastXMoves.push(parseInt(cell.getAttribute('data-value')));
-      // lastXMoves.sort(function(a,b){return a-b});
-      // const result = checkWinnerAxeX(lastXMoves, currentPlayer );
-
+      
       setIconx(cell);
       currentPlayer = "O";
-      // console.log(lastXMoves)
-
-      // if (result.length > 0) {
-      //   console.log("Winner is the player X", result);
-      // } else {
-      //   console.log("x",lastXMoves);
-      
-      // }
 
       if(checkIfWin(move,lastXMoves)){
         console.log("x wins");
       }
     } else {
-      
-      // lastOMoves.push(parseInt(cell.getAttribute('data-value')));
-      // lastOMoves.sort(function(a,b){return a-b});
-      // const result = checkWinnerAxeX(lastOMoves, currentPlayer );
-
       setIcono(cell);
       currentPlayer = "X";
       if(checkIfWin(move,lastOMoves)){
         console.log("O wins");
       }
-      // console.log(lastOMoves)
-
-      // if (result.length > 0) {
-      //   console.log("Winner is the player O", result);
-      // } else {
-      //   console.log("OO",lastOMoves);
-      // }
+      
     }
   }
 }
@@ -125,8 +104,12 @@ function handleClick(event, cell) {
 
 function generatePossibilities(number ){
     let possibilies = [];   
-    possibilies = getXPossibilities(possibilies,number);
-    possibilies = getYPossibilities(possibilies,number);
+    // possibilies = getXPossibilities(possibilies,number);
+    // possibilies = getYPossibilities(possibilies,number);
+    // possibilies = getDRPossibilities(possibilies,number);
+    possibilies = getDLPossibilities(possibilies,number);
+
+
 
 
   console.log(possibilies);
@@ -175,6 +158,51 @@ function getYPossibilities(possibilies, number){
 }
 
 
+function getDRPossibilities(possibilies, number){
+  let helper = number %20;
+  if(number%20 > 4){
+    helper = 4
+  }
+
+
+  for(let j = helper; j >=helper - 4 ;j--){
+    let arr = [];
+    for(let i = j; i >= j-4; i--){
+      if(arr.length < 5 && number - (20*i+ i) >= 1 && number -(20*i +i)  <= 400){
+        arr.push(number - (20*i +i));
+      }
+    }
+    if(arr.length == 5 && arr.includes(number)){
+      possibilies.push(arr);
+    }
+  }
+
+  return possibilies;
+}
+
+function getDLPossibilities(possibilies, number){
+  let helper = number %20;
+  if(number%20 > 4){
+    helper = 4
+  }
+
+
+  for(let j = helper; j >=helper - 4 ;j--){
+    let arr = [];
+    for(let i = j; i >= j-4; i--){
+      if(arr.length < 5 && number - (20*i - i) >= 1 && number -(20*i - i)  <= 400){
+        arr.push(number - (20*i -i));
+      }
+    }
+    if(arr.length == 5 && arr.includes(number)){
+      possibilies.push(arr);
+    }
+  }
+
+  return possibilies;
+}
+
+
 
 
 // generatePossibilities(22);
@@ -198,4 +226,5 @@ function checkIfWin(number,moves){
 
 }
 
-// console.log(checkIfWin(22,[21,23,44,25,89,24,70,83,123]))
+// console.log(checkIfWin(22,[21,43,44,85,89,64,106,83,1]))
+// console.log(checkIfWin(37,[21,58,44,85,79,64,100,121,142]))
