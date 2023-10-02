@@ -2,15 +2,9 @@ let currentPlayer = "X";
 let lastMoves = [];
 let lastXMoves = [];
 let lastOMoves = [];
-const possibleWinSequences = [
-        [1, 2, 3, 4, 5],
-        [20, 40, 60, 80, 100], 
-        [21, 42, 63, 84, 105], 
-        [19, 38, 57, 76, 95], 
-      ];
+
 
 const startButton = document.getElementById('start');
-   
 
 document.addEventListener('DOMContentLoaded',()=>{
     let board = document.getElementById('board');
@@ -24,6 +18,80 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 })
 
+let scoreX =0;
+let scoreO =0;
+
+
+function storePlayers() {
+  const player1 = document.getElementById('player1');
+  const player2 = document.getElementById('player2');
+  let playerX = document.getElementById("playerx").value;
+  let playerO = document.getElementById("playero").value;
+
+  localStorage.setItem("playerXName", playerX);
+  localStorage.setItem("playerOName", playerO);
+  
+  let p1 = localStorage.getItem("playerXName");
+  let p2 = localStorage.getItem("playerOName");
+
+  player1.innerHTML = p1;
+  player2.innerHTML = p2;
+}
+
+function getWinner(){
+  const scoreXElement = document.getElementById('score1');
+  const scoreOElement = document.getElementById('score2HJ');
+  
+  if(currentPlayer=="O"){
+    scoreX++;
+    console.log(scoreX);
+    localStorage.setItem("scoreP1",scoreX);
+    let scorej1=localStorage.getItem("scoreP1");
+   scoreXElement.innerHTML=scorej1;
+   setTimeout( function (){
+    clearBoard();
+
+   },100)
+  
+  }else if(currentPlayer == "X"){
+    scoreO++;
+    console.log(scoreO);
+    localStorage.setItem("scoreP2",scoreO);
+    let scoreP2=localStorage.getItem("scoreP2");
+    scoreOElement.innerHTML=scoreP2;
+    setTimeout( function (){
+      clearBoard();
+     },100)
+  } 
+}
+
+function clearBoard(){
+  showPopup() ;
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell=>{
+    while(cell.firstChild){
+      cell.removeChild(cell.firstChild);
+      lastXMoves = [];
+      lastOMoves = [];
+    }
+ 
+
+  })
+}
+
+function validation(){
+  let player1X = document.getElementById('playerx').value;
+  let player2O = document.getElementById('playero').value;
+  let error = document.getElementById('error');
+
+  if((player1X == '') || (player2O == '')){
+    error.classList.remove('hide');
+  }else{
+    error.classList.add('hide');
+    startGame()
+  }
+}
+
   function startGame(){
     let infoPage = document.getElementById('first-page'); 
     console.log(infoPage);
@@ -31,7 +99,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     let board = document.getElementById('board');
     board.classList.remove('hide');
     let sidebar = document.getElementById('sidebar');
-    // sidebar.classList.remove('hide');
+    sidebar.classList.remove('hide');
+    
+    storePlayers();
   }
 
 function setIconx(cell){
@@ -39,8 +109,6 @@ function setIconx(cell){
     icon.setAttribute('src', './src//images/x.png');
     icon.setAttribute('class', 'icon');
     cell.append(icon);
-   
-
 }
 
 function setIcono(cell){
@@ -50,32 +118,25 @@ function setIcono(cell){
     cell.append(icon);
 
 }
+  let  scoreP1X = parseInt(localStorage.getItem("scoreP1"));
+  let scoreP2O = parseInt(localStorage.getItem("scoreP2"));
 
-function score() {
+function scorePage() {
+  let s1 = document.getElementById('s1');
+  let s2 = document.getElementById('s2')
+
+ s1.innerHTML = scoreP1X;
+ s2.innerHTML = scoreP2O;
+
   let board = document.getElementById('board');
   board.classList.add('hide');
   let sidebar = document.getElementById('sidebar');
   sidebar.classList.add('hide');
   let score = document.getElementById('score');
   score.classList.remove('hide');
-}
-
-function checkWinnerAxeX(arr) {
-  const possibility = [1, 2, 3, 4, 5];
-                      
-  console.log("checkWinner")
-  for (let i = 0; i <= arr.length - 5 ; i++) {
-    const subarray = arr.slice(i, i + 5);
-    const differences = subarray.map((val, index) => val - subarray[0]);
-    
-    if ( possibility.includes(differences[1]) &&
-        differences.every((diff, index) => diff === differences[0] + index ) 
-        
-        ) {
-      return subarray;
-    }
-  }
-  return [];
+  setTimeout(function (){
+    location.reload();
+  }, 2000)
 }
 
 function handleClick(event, cell) {
@@ -86,17 +147,17 @@ function handleClick(event, cell) {
       
       setIconx(cell);
       currentPlayer = "O";
-
       if(checkIfWin(move,lastXMoves)){
         console.log("x wins");
+        getWinner();
       }
     } else {
       setIcono(cell);
       currentPlayer = "X";
       if(checkIfWin(move,lastOMoves)){
         console.log("O wins");
+        getWinner();
       }
-      
     }
   }
 }
@@ -104,14 +165,10 @@ function handleClick(event, cell) {
 
 function generatePossibilities(number ){
     let possibilies = [];   
-    // possibilies = getXPossibilities(possibilies,number);
-    // possibilies = getYPossibilities(possibilies,number);
-    // possibilies = getDRPossibilities(possibilies,number);
+    possibilies = getXPossibilities(possibilies,number);
+    possibilies = getYPossibilities(possibilies,number);
+    possibilies = getDRPossibilities(possibilies,number);
     possibilies = getDLPossibilities(possibilies,number);
-
-
-
-
   console.log(possibilies);
     return possibilies;
 }
@@ -140,8 +197,6 @@ function getYPossibilities(possibilies, number){
   if(number /20 > 4){
     helper = 4
   }
-
-
   for(let j = helper; j >=helper - 4 ;j--){
     let arr = [];
     for(let i = j; i >= j-4; i--){
@@ -153,7 +208,6 @@ function getYPossibilities(possibilies, number){
       possibilies.push(arr);
     }
   }
-
   return possibilies;
 }
 
@@ -163,8 +217,6 @@ function getDRPossibilities(possibilies, number){
   if(number%20 > 4){
     helper = 4
   }
-
-
   for(let j = helper; j >=helper - 4 ;j--){
     let arr = [];
     for(let i = j; i >= j-4; i--){
@@ -176,7 +228,6 @@ function getDRPossibilities(possibilies, number){
       possibilies.push(arr);
     }
   }
-
   return possibilies;
 }
 
@@ -185,8 +236,6 @@ function getDLPossibilities(possibilies, number){
   if(number%20 > 4){
     helper = 4
   }
-
-
   for(let j = helper; j >=helper - 4 ;j--){
     let arr = [];
     for(let i = j; i >= j-4; i--){
@@ -198,14 +247,8 @@ function getDLPossibilities(possibilies, number){
       possibilies.push(arr);
     }
   }
-
   return possibilies;
 }
-
-
-
-
-// generatePossibilities(22);
 
 function checkIfWin(number,moves){
   moves.push(number);
@@ -217,14 +260,37 @@ function checkIfWin(number,moves){
       && moves.includes(possibilies[i][2])
       && moves.includes(possibilies[i][3])
       && moves.includes(possibilies[i][4])
-
     ){
       return true;
     }
   }
   return false;
-
 }
 
-// console.log(checkIfWin(22,[21,43,44,85,89,64,106,83,1]))
-// console.log(checkIfWin(37,[21,58,44,85,79,64,100,121,142]))
+function replay(){
+  location.reload();
+}
+
+
+
+function showPopup() {
+  const winnerPopup = document.getElementById("winner-popup");
+    const winnerNameX = localStorage.getItem("playerXName");
+    const winnerNameO = localStorage.getItem("playerOName");
+
+    // localStorage.getItem("playerOName");
+    if( currentPlayer =='O'){
+      document.querySelector(".winner-name").textContent = winnerNameX;
+
+    }else{
+      document.querySelector(".winner-name").textContent = winnerNameO;
+
+    }
+
+    console.log(winnerPopup)
+
+    winnerPopup.classList.remove("hide");
+    setTimeout(() => {
+        winnerPopup.classList.add("hide");
+    }, 3000); 
+}

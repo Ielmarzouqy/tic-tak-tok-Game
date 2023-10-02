@@ -8,17 +8,28 @@
     <title>Tic-Tak-Tok-Game</title>
 </head>
 <body>
-    <div class="sidebar hide" id="sidebar">
+    <div class="sidebar hide " id="sidebar">
         <h1>Tic Tac Toe</h1>
-        <div class="player">
-            <label for="player1">Player 1:</label>
-            <input type="text" id="player1" placeholder="Enter name">
+        <div class="players">
+            <label for="player1">Player X:</label>
+                <p class="player1" id="player1">mina</p>
+
+                <label for="score1">Score player 1:</label>
+                <p class="score1" id="score1">0</p>
         </div>
-        <div class="player">
-            <label for="player2">Player 2:</label>
-            <input type="text" id="player2" placeholder="Enter name">
+        <div class="players">
+            <label for="player2">Player O:</label>
+            <p class="player1" id="player2">mina</p>
+
+            <label for="score2">Score player 2:</label>
+                <p class="score1" id="score2HJ">0</p>
         </div>
-        <button onclick="score()">Score</button>
+        <div>
+            <button class="replay" onclick="replay()">Replay</button>
+            <button class="exit" onclick="scorePage()">Exit</button>
+
+        </div>
+      
     </div>
   
      <div class="board hide" id="board">
@@ -27,32 +38,51 @@
     <div class="first-page " id="first-page">
         <h1>TIC TAK TOE</h1>
         <div class="player">
-            <input class="user" type="text" placeholder="Player X">
-            <input class="user" type="text" name="" id="" placeholder="Player O">
+            <input class="user" id="playerx" type="text" placeholder="Player X">
+            <input class="user" type="text" name="" id="playero" placeholder="Player O">
+          <h3 class="error hide " id="error">Please enter both players</h3>
+
+
         </div>
             
-            <button onclick="startGame()" class="btn" id="start">Play Game</button>
+            <button onclick="validation()" class="btn" id="start">Play Game</button>
     </div>
 
     <div class="hide" id="score">
 
-    
-        <div class="page-score hide" id="">
-            <div class="scores ">
-                <h1>Tic Tac Toe Scores</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Wins</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
+        <div class="page-score hide" id="scorePage">
+            <div class="scores">
+              <h1>Tic Tac Toe Scores</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th>Wins</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Player 1</td>
+                    <td id="s1">0</td> 
+                  </tr>
+                  <tr>
+                    <td>Player 2</td>
+                    <td id="s2">0</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+          
+    </div>
+
+    <div id="winner-popup" class="hide">
+        <div class="popup-content">
+            <h2>Congratulations!</h2>
+            <p class="winner-name">Player Name</p>
+            <p>You are the winner!</p>
         </div>
     </div>
+    <!-- <button id="show-popup-button" onclick="showPopup()">Show Winner</button> -->
 </body>
 </html>
